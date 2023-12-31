@@ -1,0 +1,50 @@
+[
+    {
+        "id": 1,
+        "category": "Snow",
+        "description": "light snow",
+        "embed": "DyHnWce1leM"
+    },
+    {
+        "id": 2,
+        "category": "Snow",
+        "description": "light snow",
+        "embed": "HMTh-_KmLsw"
+    },
+    {
+        "id": 3,
+        "category": "Rain",
+        "description": "light snow",
+        "embed": "9N1hDB9t9l4"
+    },
+    {
+        "id": 4,
+        "category": "Rain",
+        "description": "light snow",
+        "embed": "qSsCNQ1fVRc"
+    },
+    {
+        "id": 5,
+        "category": "Haze",
+        "description": "Hazy Conditions",
+        "embed": "_aMldqzHsz8"
+    },
+    {
+        "id": 6,
+        "category": "Smoke",
+        "description": "Hazy Conditions",
+        "embed": "IVUTK91K2Jk"
+    },
+    {
+        "id": 7,
+        "category": "Clouds",
+        "description": "Hazy Conditions",
+        "embed": "13n"
+    },
+    {
+        "id": 8,
+        "category": "Clouds",
+        "description": "Hazy Conditions",
+        "embed": "13n"
+    }
+]
