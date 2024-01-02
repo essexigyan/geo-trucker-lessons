@@ -3,12 +3,7 @@ import { Dialog } from "@headlessui/react";
 import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "@inertiajs/react";
 
-const navigation = [
-    { name: "About", href: "about" },
-    { name: "Pricing", href: "pricing" },
-    { name: "PropertyHelpers Concierge™", href: "property-helpers" },
-    { name: "Article Center", href: "article-center" },
-];
+const navigation = [];
 
 export default function Header(props) {
     const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -165,12 +160,12 @@ export default function Header(props) {
                                         </Link>
                                     ))}
                                 </div>
-                                <Link
+                                {/* <Link
                                     href="/#contact"
                                     className="text-sm font-semibold leading-6 text-gray-900"
                                 >
                                     Contact
-                                </Link>
+                                </Link> */}
                                 <div className="py-6">
                                     {props.auth.user ? (
                                         <Link
