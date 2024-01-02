@@ -1,14 +1,15 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head } from "@inertiajs/react";
 import { useGeolocated } from "react-geolocated";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import videoData from "../data/videos.json";
 import YouTube from "react-youtube";
-import env from "react-dotenv";
+import TextInput from "@/Components/TextInput";
 
 export default function Dashboard({ auth }) {
     const [weather, setWeather] = useState();
     const [videos, setVideos] = useState();
+    const inputRef = useRef();
 
     const doWeatherData = (data) => {
         setWeather(data);
@@ -22,7 +23,9 @@ export default function Dashboard({ auth }) {
             },
             userDecisionTimeout: 5000,
         });
+
     const api = import.meta.env.VITE_WEATHER_API;
+
     const getWeatherData = async () => {
         try {
             const result = await fetch(
@@ -35,9 +38,28 @@ export default function Dashboard({ auth }) {
         }
     };
 
+    const opts = {
+        height: "450",
+        width: "600",
+        playerVars: {
+            // https://developers.google.com/youtube/player_parameters
+            autoplay: 0,
+        },
+    };
+    const handleInputChange = (event) => {
+        const inputValue = event.target.value;
+
+        const sVideos = videoData.filter(
+            (item) =>
+                item.category.toLowerCase().indexOf(inputValue.toLowerCase()) >
+                -1
+        );
+        setVideos(sVideos);
+    };
+
     useEffect(() => {
         if (coords) {
-            let data = getWeatherData().then((resp) => {
+            const data = getWeatherData().then((resp) => {
                 doWeatherData(resp);
             });
         }
@@ -53,7 +75,7 @@ export default function Dashboard({ auth }) {
             }
         >
             <Head title="Dashboard" />
-            {weather && console.log(weather)}
+
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
@@ -126,23 +148,43 @@ export default function Dashboard({ auth }) {
             <div className="py-12">
                 <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
                     <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                        <table>
+                        <div className="mb-4 font-medium text-sm w-full">
+                            <TextInput
+                                type="text"
+                                className="mt-1 block w-1/2"
+                                ref={inputRef}
+                                placeholder="Enter weather condition"
+                                onChange={handleInputChange}
+                            />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className="py-12">
+                <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
+                        <table cellPadding={"10px"}>
                             <tbody>
                                 <tr>
                                     <td>Videos</td>
                                 </tr>
+
                                 {videos &&
+                                    inputRef.current.value != "" &&
                                     videos
-                                        .filter(
-                                            (item) =>
-                                                item.category ==
-                                                weather.weather[0].main
+                                        .filter((item) =>
+                                            (item.category ==
+                                                inputRef.current.value) !=
+                                            ""
+                                                ? inputRef.current.value
+                                                : weather.weather[0].main
                                         )
                                         .map((items, id) => (
                                             <tr key={items.id}>
                                                 <td>
                                                     <YouTube
                                                         videoId={items.embed}
+                                                        opts={opts}
                                                     />
                                                 </td>
                                             </tr>
